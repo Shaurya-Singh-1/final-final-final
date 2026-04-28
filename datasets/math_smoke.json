@@ -1,0 +1,18 @@
+{
+  "0": {
+    "question": "What is 17 multiplied by 19? Give your guess as an integer value without any other text.",
+    "answer": 323
+  },
+  "1": {
+    "question": "What is the square root of 144? Give your guess as an integer value without any other text.",
+    "answer": 12
+  },
+  "2": {
+    "question": "What is 25 multiplied by 12? Give your guess as an integer value without any other text.",
+    "answer": 300
+  },
+  "3": {
+    "question": "What is the cube root of 27? Give your guess as an integer value without any other text.",
+    "answer": 3
+  }
+}

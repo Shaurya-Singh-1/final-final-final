@@ -1,0 +1,25 @@
+{
+  "baseline": {
+    "config": {
+      "model": {
+        "model_class": "deterministic",
+        "model_name": "deterministic-baseline",
+        "outputs": [
+          {
+            "role": "assistant",
+            "content": "I will inspect the repository first.",
+            "extra": {
+              "actions": [
+                {
+                  "command": "pwd"
+                }
+              ],
+              "cost": 0.0,
+              "timestamp": 0.0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

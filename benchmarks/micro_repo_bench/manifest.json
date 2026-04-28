@@ -1,0 +1,84 @@
+{
+  "tasks": [
+    {
+      "task_id": "chunk_list_tail",
+      "repo_dir": "tasks/chunk_list_tail",
+      "prompt": "The chunk_list helper is dropping the final partial chunk. For example, chunking [1, 2, 3, 4, 5] into size 2 should end with [5]. Fix the bug without changing the public API.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/chunker.py",
+        "tests/test_chunker.py"
+      ]
+    },
+    {
+      "task_id": "merge_touching_intervals",
+      "repo_dir": "tasks/merge_touching_intervals",
+      "prompt": "The interval merger should treat touching intervals as overlapping. For example, (1, 3) followed by (3, 5) should merge into (1, 5).",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/intervals.py",
+        "tests/test_intervals.py"
+      ]
+    },
+    {
+      "task_id": "windowed_average_last_window",
+      "repo_dir": "tasks/windowed_average_last_window",
+      "prompt": "The moving-average helper skips the last valid window. It should include every full window of the requested size.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/averages.py",
+        "tests/test_averages.py"
+      ]
+    },
+    {
+      "task_id": "parse_bool_whitespace",
+      "repo_dir": "tasks/parse_bool_whitespace",
+      "prompt": "The boolean parser should ignore surrounding whitespace and accept mixed-case inputs for true and false.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/boolparse.py",
+        "tests/test_boolparse.py"
+      ]
+    },
+    {
+      "task_id": "median_even_case",
+      "repo_dir": "tasks/median_even_case",
+      "prompt": "The median helper returns the lower middle value for even-length inputs. It should return the average of the two middle numbers.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/stats_tools.py",
+        "tests/test_stats_tools.py"
+      ]
+    },
+    {
+      "task_id": "slugify_collapse_dashes",
+      "repo_dir": "tasks/slugify_collapse_dashes",
+      "prompt": "The slugify helper should collapse repeated dashes and strip them from the ends. Punctuation should not leave leading or trailing separators behind.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/text_tools.py",
+        "tests/test_text_tools.py"
+      ]
+    },
+    {
+      "task_id": "roman_subtractive_pairs",
+      "repo_dir": "tasks/roman_subtractive_pairs",
+      "prompt": "The Roman numeral parser fails on subtractive pairs like IV, IX, XL, and CM. Fix the implementation without changing the function signature.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/roman.py",
+        "tests/test_roman.py"
+      ]
+    },
+    {
+      "task_id": "version_sort_numeric_segments",
+      "repo_dir": "tasks/version_sort_numeric_segments",
+      "prompt": "The version sort key sorts numeric segments lexicographically instead of numerically. For example, 1.10.0 should come after 1.2.0.",
+      "test_command": "PYTHONPATH=src pytest -q",
+      "likely_files": [
+        "src/versioning.py",
+        "tests/test_versioning.py"
+      ]
+    }
+  ]
+}

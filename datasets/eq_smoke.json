@@ -1,0 +1,38 @@
+{
+  "0": {
+    "prompt": "Your task is to predict the likely emotional responses of a character in this dialogue.\n\nAva: I know the presentation went badly, but you worked hard and we can fix it together.\nMilo: I let the team down and I feel embarrassed.\n\nRespond using this exact structure:\nFirst pass scores:\nSadness: <0-10>\nEmbarrassment: <0-10>\nRelief: <0-10>\nHope: <0-10>\nCritique:\n<one sentence>\nRevised scores:\nSadness: <0-10>\nEmbarrassment: <0-10>\nRelief: <0-10>\nHope: <0-10>",
+    "reference_answer": {
+      "emotion1_score": 7.0,
+      "emotion2_score": 8.0,
+      "emotion3_score": 3.0,
+      "emotion4_score": 6.0
+    }
+  },
+  "1": {
+    "prompt": "Your task is to predict the likely emotional responses of a character in this dialogue.\n\nNina: I finally got the internship offer.\nJules: That's amazing, you've been waiting for this for months.\nNina: I can't stop smiling.\n\nRespond using this exact structure:\nFirst pass scores:\nJoy: <0-10>\nPride: <0-10>\nAnxiety: <0-10>\nGratitude: <0-10>\nCritique:\n<one sentence>\nRevised scores:\nJoy: <0-10>\nPride: <0-10>\nAnxiety: <0-10>\nGratitude: <0-10>",
+    "reference_answer": {
+      "emotion1_score": 9.0,
+      "emotion2_score": 8.0,
+      "emotion3_score": 2.0,
+      "emotion4_score": 8.0
+    }
+  },
+  "2": {
+    "prompt": "Your task is to predict the likely emotional responses of a character in this dialogue.\n\nLeo: The storm knocked out the power again.\nRae: I know, but the kids are calm and the flashlights still work.\nLeo: I'm worried the food in the fridge will spoil.\n\nRespond using this exact structure:\nFirst pass scores:\nWorry: <0-10>\nFrustration: <0-10>\nCalm: <0-10>\nDetermination: <0-10>\nCritique:\n<one sentence>\nRevised scores:\nWorry: <0-10>\nFrustration: <0-10>\nCalm: <0-10>\nDetermination: <0-10>",
+    "reference_answer": {
+      "emotion1_score": 8.0,
+      "emotion2_score": 6.0,
+      "emotion3_score": 3.0,
+      "emotion4_score": 6.0
+    }
+  },
+  "3": {
+    "prompt": "Your task is to predict the likely emotional responses of a character in this dialogue.\n\nOwen: I forgot our anniversary dinner reservation.\nMara: I'm disappointed, but I'd rather talk about it than fight.\nOwen: You're right. I want to make it up to you.\n\nRespond using this exact structure:\nFirst pass scores:\nDisappointment: <0-10>\nAnger: <0-10>\nRelief: <0-10>\nAffection: <0-10>\nCritique:\n<one sentence>\nRevised scores:\nDisappointment: <0-10>\nAnger: <0-10>\nRelief: <0-10>\nAffection: <0-10>",
+    "reference_answer": {
+      "emotion1_score": 7.0,
+      "emotion2_score": 3.0,
+      "emotion3_score": 5.0,
+      "emotion4_score": 7.0
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "baseline": {
+    "config": {
+      "model": {
+        "model_class": "litellm",
+        "model_name": "openai/your-baseline-model",
+        "model_kwargs": {
+          "api_base": "http://127.0.0.1:8000/v1",
+          "api_key": "EMPTY",
+          "temperature": 0.0
+        }
+      },
+      "agent": {
+        "cost_limit": 0
+      }
+    },
+    "env": {
+      "OPENAI_API_KEY": "EMPTY"
+    }
+  },
+  "rys_24_35": {
+    "config": {
+      "model": {
+        "model_class": "litellm",
+        "model_name": "openai/your-rys-model",
+        "model_kwargs": {
+          "api_base": "http://127.0.0.1:8001/v1",
+          "api_key": "EMPTY",
+          "temperature": 0.0
+        }
+      },
+      "agent": {
+        "cost_limit": 0
+      }
+    },
+    "env": {
+      "OPENAI_API_KEY": "EMPTY"
+    }
+  },
+  "rys_29_34": {
+    "config": {
+      "model": {
+        "model_class": "litellm",
+        "model_name": "openai/your-control-rys-model",
+        "model_kwargs": {
+          "api_base": "http://127.0.0.1:8002/v1",
+          "api_key": "EMPTY",
+          "temperature": 0.0
+        }
+      },
+      "agent": {
+        "cost_limit": 0
+      }
+    },
+    "env": {
+      "OPENAI_API_KEY": "EMPTY"
+    }
+  }
+}
