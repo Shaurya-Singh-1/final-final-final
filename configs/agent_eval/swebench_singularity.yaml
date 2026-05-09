@@ -1,0 +1,5 @@
+environment:
+  environment_class: singularity
+  executable: apptainer
+  exec_args:
+    - --nv

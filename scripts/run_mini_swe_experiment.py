@@ -51,15 +51,54 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--python", dest="python_executable", default=sys.executable)
     parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument(
+        "--condition-name",
+        action="append",
+        default=[],
+        help="Run only these condition names. Repeat flag to launch conditions separately in parallel.",
+    )
     parser.add_argument("--redo-existing", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
+
+
+def normalize_config_specs(specs: list[str]) -> list[str]:
+    """Resolve repo-local config file paths to absolute paths before subprocess launch."""
+    normalized: list[str] = []
+    for spec in specs:
+        if "=" in spec:
+            normalized.append(spec)
+            continue
+
+        path = Path(spec)
+        if path.exists():
+            normalized.append(str(path.resolve()))
+            continue
+
+        root_relative = ROOT / spec
+        if root_relative.exists():
+            normalized.append(str(root_relative.resolve()))
+            continue
+
+        normalized.append(spec)
+
+    return normalized
 
 
 def main() -> None:
     args = parse_args()
     manifest = load_manifest(Path(args.manifest))
     conditions = load_condition_list(Path(args.conditions_file))
+    if args.condition_name:
+        requested = set(args.condition_name)
+        available = {str(condition["name"]) for condition in conditions}
+        missing = sorted(requested - available)
+        if missing:
+            raise KeyError(
+                f"Unknown condition name(s): {missing}. Available conditions: {sorted(available)}"
+            )
+        conditions = [condition for condition in conditions if str(condition["name"]) in requested]
+
     routes = load_route_map(Path(args.model_routes_file))
     output_root = Path(args.output_dir)
     output_root.mkdir(parents=True, exist_ok=True)
@@ -70,7 +109,7 @@ def main() -> None:
             "mini-swe-agent source not found. Clone it next to this project or install it in the environment."
         )
 
-    base_specs = list(args.base_config) if args.base_config else ["swebench.yaml"]
+    base_specs = normalize_config_specs(list(args.base_config) if args.base_config else ["swebench.yaml"])
     env_lock = threading.Lock()
 
     for condition in conditions:

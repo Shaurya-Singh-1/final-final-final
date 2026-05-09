@@ -152,3 +152,86 @@ def test_run_agent_study_pipeline_dry_run_creates_setup_files(tmp_path: Path) ->
     assert "run_mini_swe_experiment.py" in stdout
     assert "evaluate_swebench_runs.py" in stdout
     assert "summarize_agent_runs.py" in stdout
+
+
+def test_run_mini_swe_experiment_dry_run_filters_conditions_and_resolves_config_paths(
+    tmp_path: Path,
+) -> None:
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "dataset_name": "princeton-nlp/SWE-Bench_Verified",
+                "split": "test",
+                "instance_ids": ["demo__issue-1"],
+            }
+        )
+    )
+
+    conditions_path = tmp_path / "conditions.json"
+    conditions_path.write_text(
+        json.dumps(
+            {
+                "conditions": [
+                    {"name": "baseline", "extra_layers": 0, "overhead_fraction": 0.0},
+                    {"name": "rys_16_20", "extra_layers": 4, "overhead_fraction": 0.0625},
+                ]
+            }
+        )
+    )
+
+    routes_path = tmp_path / "routes.json"
+    routes_path.write_text(
+        json.dumps(
+            {
+                "baseline": {
+                    "config": {
+                        "model": {
+                            "model_class": "litellm",
+                            "model_name": "baseline-model",
+                        }
+                    }
+                },
+                "rys_16_20": {
+                    "config": {
+                        "model": {
+                            "model_class": "litellm",
+                            "model_name": "rys-model",
+                        }
+                    }
+                },
+            }
+        )
+    )
+
+    custom_config = tmp_path / "custom.yaml"
+    custom_config.write_text("environment:\n  environment_class: singularity\n")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "scripts" / "run_mini_swe_experiment.py"),
+            "--manifest",
+            str(manifest_path),
+            "--conditions-file",
+            str(conditions_path),
+            "--model-routes-file",
+            str(routes_path),
+            "--output-dir",
+            str(tmp_path / "runs"),
+            "--base-config",
+            str(custom_config.relative_to(tmp_path)),
+            "--condition-name",
+            "baseline",
+            "--dry-run",
+        ],
+        check=True,
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+    )
+
+    stdout = result.stdout
+    assert "[baseline]" in stdout
+    assert "[rys_16_20]" not in stdout
+    assert str(custom_config.resolve()) in stdout
