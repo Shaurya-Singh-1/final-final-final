@@ -10,7 +10,7 @@
 
 set -euxo pipefail
 
-REPO_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
+REPO_DIR="${SLURM_SUBMIT_DIR:-$PWD}"
 ROOT_DIR="$(cd "$REPO_DIR"/.. && pwd)"
 RUNROOT="$ROOT_DIR/qwen35_verified_50"
 MODELDIR="$ROOT_DIR/models/Qwen3.5-27B"
