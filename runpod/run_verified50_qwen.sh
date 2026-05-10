@@ -16,6 +16,7 @@ export HF_HOME="$ROOT_DIR/cache/hf"
 export HUGGINGFACE_HUB_CACHE="$ROOT_DIR/cache/hf/hub"
 export MODELDIR
 export RUNROOT
+PORT_BASE=18000
 
 mkdir -p "$LOGDIR" "$ROOT_DIR/models" "$ROOT_DIR/exports" "$RUNROOT" \
   "$UV_CACHE_DIR" "$XDG_CACHE_HOME" "$HF_HOME"
@@ -110,12 +111,13 @@ payload = {
                 "model_class": "litellm",
                 "model_name": "qwen35-baseline",
                 "model_kwargs": {
-                    "api_base": "http://127.0.0.1:8000/v1",
+                    "api_base": f"http://127.0.0.1:{18000}/v1",
                     "api_key": "EMPTY",
                     "temperature": 0.0,
                 },
             },
             "agent": {"cost_limit": 0},
+            "additional_config": {"gdn_prefill_backend": "triton"},
         },
         "env": {"OPENAI_API_KEY": "EMPTY"},
     },
@@ -125,12 +127,13 @@ payload = {
                 "model_class": "litellm",
                 "model_name": "qwen35-rys-16-20",
                 "model_kwargs": {
-                    "api_base": "http://127.0.0.1:8001/v1",
+                    "api_base": f"http://127.0.0.1:{18001}/v1",
                     "api_key": "EMPTY",
                     "temperature": 0.0,
                 },
             },
             "agent": {"cost_limit": 0},
+            "additional_config": {"gdn_prefill_backend": "triton"},
         },
         "env": {"OPENAI_API_KEY": "EMPTY"},
     },
@@ -140,12 +143,13 @@ payload = {
                 "model_class": "litellm",
                 "model_name": "qwen35-rys-32-36",
                 "model_kwargs": {
-                    "api_base": "http://127.0.0.1:8002/v1",
+                    "api_base": f"http://127.0.0.1:{18002}/v1",
                     "api_key": "EMPTY",
                     "temperature": 0.0,
                 },
             },
             "agent": {"cost_limit": 0},
+            "additional_config": {"gdn_prefill_backend": "triton"},
         },
         "env": {"OPENAI_API_KEY": "EMPTY"},
     },
@@ -175,11 +179,11 @@ start_server() {
 
 pkill -f "vllm.entrypoints.openai.api_server" || true
 
-start_server "0,1" "$MODELDIR" "qwen35-baseline" 8000 baseline-server.log
-start_server "2,3" "$RYS16" "qwen35-rys-16-20" 8001 rys_16_20-server.log
-start_server "4,5" "$RYS32" "qwen35-rys-32-36" 8002 rys_32_36-server.log
+start_server "0,1" "$MODELDIR" "qwen35-baseline" 18000 baseline-server.log
+start_server "2,3" "$RYS16" "qwen35-rys-16-20" 18001 rys_16_20-server.log
+start_server "4,5" "$RYS32" "qwen35-rys-32-36" 18002 rys_32_36-server.log
 
-for port in 8000 8001 8002; do
+for port in 18000 18001 18002; do
   for _ in $(seq 1 120); do
     if curl -sf "http://127.0.0.1:${port}/v1/models" >/dev/null; then
       break
