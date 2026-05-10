@@ -184,7 +184,6 @@ start_server() {
     --force-model "$REQUEST_MODEL_NAME" \
     --host 127.0.0.1 \
     --port "$PORT" \
-    --continuous-batching \
     --dtype bfloat16 \
     --trust-remote-code \
     > "$LOGDIR/$LOG_NAME" 2>&1 &
@@ -196,12 +195,12 @@ wait_for_server() {
   local LABEL="$3"
 
   for _ in $(seq 1 180); do
-    if curl -sf "http://127.0.0.1:${PORT}/v1/models" >/dev/null; then
+    if curl -sf "http://127.0.0.1:${PORT}/health" >/dev/null; then
       break
     fi
     sleep 5
   done
-  curl -sf "http://127.0.0.1:${PORT}/v1/models" >/dev/null
+  curl -sf "http://127.0.0.1:${PORT}/health" >/dev/null
 
   curl -sf "http://127.0.0.1:${PORT}/v1/chat/completions" \
     -H "Content-Type: application/json" \
