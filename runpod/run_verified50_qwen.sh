@@ -168,6 +168,7 @@ start_server() {
     --model "$MODEL_DIR" \
     --served-model-name "$SERVED_NAME" \
     --host 127.0.0.1 \
+    --gdn-prefill-backend triton \
     --tensor-parallel-size 2 \
     --dtype bfloat16 \
     --gpu-memory-utilization 0.90 \
