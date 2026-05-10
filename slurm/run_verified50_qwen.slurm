@@ -6,7 +6,7 @@
 #SBATCH --mem=96G
 #SBATCH --time=08:00:00
 #SBATCH -J qwen_verified50
-#SBATCH -o logs/%x-%j.out
+#SBATCH -o qwen_verified50-%j.out
 
 set -euxo pipefail
 
