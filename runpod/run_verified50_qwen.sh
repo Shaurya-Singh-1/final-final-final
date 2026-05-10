@@ -166,12 +166,13 @@ start_server() {
   local PORT="$4"
   local LOG_NAME="$5"
 
-  CUDA_VISIBLE_DEVICES="$GPUs" nohup uv run transformers serve "$MODEL_DIR" \
+  CUDA_VISIBLE_DEVICES="$GPUs" nohup uv run transformers serve \
     --force-model "$REQUEST_MODEL_NAME" \
     --host 127.0.0.1 \
     --port "$PORT" \
     --continuous-batching \
     --dtype bfloat16 \
+    --trust-remote-code \
     > "$LOGDIR/$LOG_NAME" 2>&1 &
 }
 
