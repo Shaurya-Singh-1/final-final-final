@@ -56,10 +56,24 @@ if [ ! -d .venv ]; then
 fi
 uv sync
 uv pip install --upgrade \
-  "transformers[serving] @ git+https://github.com/huggingface/transformers.git@main" \
+  "transformers[serving]" \
   sb-cli \
   pillow \
   torchvision
+
+uv run python - <<'PY'
+from pathlib import Path
+
+serve_path = Path(".venv/lib/python3.11/site-packages/transformers/cli/serve.py")
+text = serve_path.read_text()
+needle = "from fastapi import FastAPI, HTTPException"
+replacement = "from fastapi import FastAPI, HTTPException, Request"
+if needle in text and replacement not in text:
+    serve_path.write_text(text.replace(needle, replacement, 1))
+    print("patched transformers serve.py Request import")
+else:
+    print("transformers serve.py already patched")
+PY
 
 uv run python -c "import transformers; print(transformers.__version__)"
 uv run python -c "import sb_cli; print('sb-cli ok')"
